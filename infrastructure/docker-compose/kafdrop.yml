@@ -1,0 +1,15 @@
+version: '3.7'
+services:
+    kafdrop:
+        image: obsidiandynamics/kafdrop
+        platform: linux/amd64
+        hostname: kafdrop
+        ports:
+        - "9001:9000"
+        environment:
+          KAFKA_BROKERCONNECT: kafka-broker-1:9092,kafka-broker-2:9092,kafka-broker-3:9092
+          KAFKA_PROPERTIES: "security.protocol=PLAINTEXT"
+          SCHEMAREGISTRY_CONNECT: "http://schema-registry:8081"
+          JVM_OPTS: "-Xms32M -Xmx64M"
+        networks:
+        - ${GLOBAL_NETWORK:-kafka}
